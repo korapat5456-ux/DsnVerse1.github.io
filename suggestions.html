@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>ข้อเสนอแนะจากนักเรียน DSN 💡</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: 'Kanit', sans-serif;
+      background-color: #f1fdf2;
+      margin: 0;
+    }
+    .navbar {
+      background: #1b3e1b;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .navbar .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ffeb3b;
+    }
+    .nav-links a {
+      margin-left: 1rem;
+      text-decoration: none;
+      color: white;
+    }
+    h2 {
+      text-align: center;
+      color: #1b3e1b;
+      margin-top: 2rem;
+    }
+    #suggestionsContainer {
+      max-width: 800px;
+      margin: 2rem auto;
+    }
+    .suggestion-card {
+      background: white;
+      padding: 1rem;
+      border-left: 6px solid #cddc39;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .suggestion-card h4 {
+      margin: 0;
+      color: #33691e;
+    }
+    .suggestion-card p {
+      margin: 0.5rem 0 0;
+    }
+    footer {
+      background: #1b3e1b;
+      text-align: center;
+      color: white;
+      padding: 1rem;
+      margin-top: 3rem;
+    }
+  </style>
+  <link rel="icon" type="image/png" sizes="64x64" href="dsnverse-64x64.png">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">DSNverse</div>
+    <div class="nav-links">
+   <a href="index.html">Home</a>
+      <a href="map.html">Map</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="game.html">Dream</a>
+      <a href="dreams.html">All Dreams</a>
+      <a href="wanttosaytous.html">SayAboutWeb</a> 
+      <a href="suggestions.html">Suggestions</a>
+    </div>
+  </nav>
+
+  <h2>ข้อเสนอแนะจากนักเรียน DSN 💡</h2>
+  <div id="suggestionsContainer"></div>
+
+  <footer>
+    <p>© 2025 DSNverse. Powered by ความเห็นดี ๆ 💚💛</p>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="firebase-config.js"></script>
+<script>
+  db.collection("suggestions")
+  .orderBy("timestamp", "desc")
+  .get()
+  .then(snapshot => {
+    const container = document.getElementById("suggestionsContainer");
+    snapshot.forEach(doc => {
+      const d = doc.data();
+      const suggestion = d.suggestion || d.suggestions;
+      if (suggestion && suggestion.trim() !== "") {
+        const name = d.name || d.Name || "ไม่ระบุชื่อ";
+        const div = document.createElement("div");
+        div.className = "suggestion-card";
+        div.innerHTML = `<h4>${name}</h4><p>${suggestion}</p>`; // ✅ แก้ใช้ suggestion
+        container.appendChild(div);
+      }
+    });
+  });
+</script>
+</body>
+</html>

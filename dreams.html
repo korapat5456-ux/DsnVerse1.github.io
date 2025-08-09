@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DSNverse - รวมความฝัน</title>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&display=swap');
+    body {
+      font-family: 'Kanit', sans-serif;
+      background: #f2fff1;
+      margin: 0;
+      padding: 0;
+      color: #1e4620;
+    }
+    .navbar {
+      background: #1e3a1e;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+    .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: #ffeb3b;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+    }
+    .container {
+      max-width: 800px;
+      margin: 4rem auto;
+      padding: 2rem;
+    }
+    h2 {
+      text-align: center;
+      color: #33691e;
+    }
+    .dream-card {
+      background: #ffffff;
+      border-left: 6px solid #cddc39;
+      margin: 1rem 0;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+    }
+    .dream-card h4 {
+      margin-bottom: 0.5rem;
+      color: #558b2f;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #1e3a1e;
+      color: #ccc;
+    }
+  </style>
+  <link rel="icon" type="image/png" sizes="64x64" href="dsnverse-64x64.png">
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="firebase-config.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">DSNverse</div>
+    <ul class="nav-links">
+       <a href="index.html">Home</a>
+      <a href="map.html">Map</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="game.html">Dream</a>
+      <a href="dreams.html">All Dreams</a>
+      <a href="wanttosaytous.html">SayAboutWeb</a> 
+      <a href="suggestions.html">Suggestions</a>
+    </ul>
+  </nav>
+
+  <div class="container" data-aos="fade-up">
+    <h2>รวมความฝันของนักเรียน DSN 💚💛</h2>
+    <div id="dreamsContainer">
+      <!-- Firebase จะโหลดความฝันใส่ตรงนี้ -->
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 DSNverse. Made with 💚💛 by นักเรียนเทพศิรินทร์นนท์ 2/8 คอมคณิต</p>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
+
+  <!-- Firebase script placeholder -->
+  <script type="module">
+    // Firebase config และฟังก์ชันโหลดความฝัน (ตัวอย่าง mock)
+    const dreams = [
+
+    ];
+
+    const container = document.getElementById("dreamsContainer");
+    dreams.forEach(d => {
+      const div = document.createElement("div");
+      div.className = "dream-card";
+      div.innerHTML = `<h4>${d.name}</h4><p>${d.dream}</p>`;
+      container.appendChild(div);
+    });
+
+    // ถ้าเชื่อม Firebase จริง สามารถใช้ Firestore ดึงข้อมูลมาแทนได้ตรงนี้
+  </script>
+
+  <script>
+    
+db.collection("dreams").orderBy("timestamp", "desc").get().then(snapshot => {
+  const container = document.getElementById("dreamsContainer");
+  snapshot.forEach(doc => {
+    const d = doc.data();
+    const div = document.createElement("div");
+    div.className = "dream-card";
+    div.innerHTML = `<h4>${d.name}</h4><p>${d.dream}</p>`;
+    container.appendChild(div);
+  });
+});
+
+  </script>
+</body>
+</html>

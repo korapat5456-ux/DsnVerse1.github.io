@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>ส่งความฝัน ✨</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: 'Kanit', sans-serif;
+      background-color: #f1fdf2;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar {
+      background: #1b3e1b;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .navbar .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ffeb3b;
+    }
+    .nav-links a {
+      margin-left: 1rem;
+      text-decoration: none;
+      color: white;
+    }
+    .container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #1b3e1b;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: 'Kanit', sans-serif;
+    }
+    button {
+      margin-top: 1.5rem;
+      padding: 0.8rem 2rem;
+      background-color: #388e3c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #message {
+      margin-top: 1rem;
+      color: #2e7d32;
+      font-weight: bold;
+      text-align: center;
+    }
+    footer {
+      background: #1b3e1b;
+      text-align: center;
+      color: white;
+      padding: 1rem;
+      margin-top: 3rem;
+    }
+  </style>
+  <link rel="icon" type="image/png" sizes="64x64" href="dsnverse-64x64.png">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">DSNverse</div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+      <a href="map.html">Map</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="game.html">Dream</a>
+      <a href="dreams.html">All Dreams</a>
+      <a href="wanttosaytous.html">SayAboutWeb</a> 
+      <a href="suggestions.html">Suggestions</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2>ส่งความฝันของคุณ ✨</h2>
+    <form id="dreamForm">
+      <label for="name">ชื่อเล่น + ชั้นปี:</label>
+      <input type="text" id="name" required />
+      <label for="dream">ความฝันของคุณ:</label>
+      <textarea id="dream" rows="4" required></textarea>
+      <button type="submit">📤 ส่งเลย!</button>
+    </form>
+    <div id="message"></div>
+  </div>
+
+  <footer>
+    <p>© 2025 DSNverse. ส่งฝันเพื่อเป็นแรงบันดาลใจ 💚💛</p>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="firebase-config.js"></script>
+  <script>
+    document.getElementById("dreamForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const dream = document.getElementById("dream").value;
+      db.collection("dreams").add({
+        name: name,
+        dream: dream,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        document.getElementById("dreamForm").reset();
+        document.getElementById("message").textContent = "✅ ส่งความฝันเรียบร้อยแล้ว!";
+      });
+    });
+  </script>
+</body>
+</html>
